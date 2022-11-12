@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'http_exception.dart';
+
 const baseUrl = 'https://api.stripe.com/v1/';
 const skApi = 'sk_test_TqX0Y9mcG2no0LKyG7lpuhmd00gcglhtbc';
 
@@ -60,19 +62,25 @@ class Payment with ChangeNotifier {
         'card[number]': card.cardNo,
         'card[cvc]': card.cvv
       });
-      print(response.body);
-      tempCard = {
-        'id': json.decode(response.body)['id'],
-        'name': card.name,
-        'type': json.decode(response.body)['type'],
-        'fngrprnt': json.decode(response.body)["card"]['fingerprint'],
-        'last4': json.decode(response.body)["card"]['last4'],
-        'brand': json.decode(response.body)["card"]['brand'],
-        'exmonth': card.exmonth,
-        'exyear': card.exyear,
-      };
+       print(response.body);
+      final extractedData = json.decode(response.body) as Map<String,dynamic>;
+
+      if (extractedData.containsKey('error')) {
+        print(extractedData['error']['message']); 
+        throw HttpException(extractedData['error']['message']);
+      } else {
+        tempCard = {
+          'id': extractedData['id'],
+          'name': card.name,
+          'type': extractedData['type'],
+          'fngrprnt': extractedData["card"]['fingerprint'],
+          'last4': extractedData["card"]['last4'],
+          'brand': extractedData["card"]['brand'],
+          'exmonth': card.exmonth,
+          'exyear': card.exyear,
+        };
+      }
     } catch (error) {
-      print(error);
       rethrow;
     }
     print(tempCard);

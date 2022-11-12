@@ -1,8 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:checkout/Models/http_exception.dart';
 import 'package:checkout/Models/payment.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../Models/payment.dart';
 
 import '../constants.dart';
 
@@ -39,13 +40,13 @@ class _PaymentInfoScreenState extends State<PaymentInfoScreen> {
       try {
         await Provider.of<Payment>(context, listen: false)
             .addPaymentMethod(temp);
-             Navigator.of(context).pop();
-      } catch (error) {
+        //  Navigator.of(context).pop();
+      } on HttpException catch (error) {
         await showDialog<void>(
           context: context,
           builder: (context) => AlertDialog(
             title: const Text('An Error Occur'),
-            content: const Text('Something Went wrong!'),
+            content: Text(error.message),
             actions: [
               TextButton(
                 onPressed: () {
@@ -60,13 +61,11 @@ class _PaymentInfoScreenState extends State<PaymentInfoScreen> {
       setState(() {
         _isloading = false;
       });
-      
     }
-   
+
     setState(() {
       _isloading = false;
     });
-    
   }
 
   @override
@@ -81,7 +80,7 @@ class _PaymentInfoScreenState extends State<PaymentInfoScreen> {
               key: _formkey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
                     onTap: () {
@@ -105,7 +104,8 @@ class _PaymentInfoScreenState extends State<PaymentInfoScreen> {
                   ),
                   Card(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 25,horizontal: 15),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 25, horizontal: 15),
                       child: Column(
                         children: [
                           Center(
@@ -168,7 +168,8 @@ class _PaymentInfoScreenState extends State<PaymentInfoScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.025,
+                                width:
+                                    MediaQuery.of(context).size.width * 0.025,
                               ),
                               Flexible(
                                 child: Column(
@@ -180,8 +181,8 @@ class _PaymentInfoScreenState extends State<PaymentInfoScreen> {
                                         Flexible(
                                           child: TextFormField(
                                             controller: _monthController,
-                                             keyboardType: TextInputType.number,
-                                             maxLength: 2,
+                                            keyboardType: TextInputType.number,
+                                            maxLength: 2,
                                             validator: (value) {
                                               if (value.toString().isEmpty) {
                                                 return '*';
@@ -210,7 +211,7 @@ class _PaymentInfoScreenState extends State<PaymentInfoScreen> {
                                           child: TextFormField(
                                             controller: _yearController,
                                             maxLength: 2,
-                                             keyboardType: TextInputType.number,
+                                            keyboardType: TextInputType.number,
                                             validator: (value) {
                                               if (value.toString().isEmpty) {
                                                 return '*';
@@ -219,11 +220,11 @@ class _PaymentInfoScreenState extends State<PaymentInfoScreen> {
                                             },
                                             decoration: const InputDecoration(
                                               contentPadding:
-                                                   EdgeInsets.symmetric(
+                                                  EdgeInsets.symmetric(
                                                       vertical: 12.5,
                                                       horizontal: 10.0),
                                               hintText: 'YY',
-                                              hintStyle:  TextStyle(
+                                              hintStyle: TextStyle(
                                                 color: Color.fromRGBO(
                                                     20, 14, 37, 0.6),
                                                 fontSize: 12,
@@ -242,7 +243,7 @@ class _PaymentInfoScreenState extends State<PaymentInfoScreen> {
                               Flexible(
                                 child: TextFormField(
                                   controller: _cvvController,
-                                   keyboardType: TextInputType.number,
+                                  keyboardType: TextInputType.number,
                                   validator: (value) {
                                     if (value.toString().isEmpty) {
                                       return '*required';
