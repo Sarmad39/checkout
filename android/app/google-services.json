@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "815386719806",
+    "project_id": "checkout-c14bc",
+    "storage_bucket": "checkout-c14bc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:815386719806:android:f4e399b85bd2bd519ec36f",
+        "android_client_info": {
+          "package_name": "com.example.checkout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "815386719806-h7mn1iksd3bnsakmhne1glcpd2ihbp4u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoog7PD7JsPKhtMdv12bEWqu-F3Zx7Euo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "815386719806-h7mn1iksd3bnsakmhne1glcpd2ihbp4u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
