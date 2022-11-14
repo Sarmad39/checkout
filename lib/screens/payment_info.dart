@@ -40,7 +40,7 @@ class _PaymentInfoScreenState extends State<PaymentInfoScreen> {
       try {
         await Provider.of<Payment>(context, listen: false)
             .addPaymentMethod(temp);
-        //  Navigator.of(context).pop();
+          Navigator.of(context).pop();
       } on HttpException catch (error) {
         await showDialog<void>(
           context: context,
@@ -57,12 +57,27 @@ class _PaymentInfoScreenState extends State<PaymentInfoScreen> {
             ],
           ),
         );
+      } catch (error) {
+        await showDialog<void>(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('An Error Occur'),
+            content: Text('Something went wrong!!'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("okay"),
+              ),
+            ],
+          ),
+        );
       }
       setState(() {
         _isloading = false;
       });
     }
-
     setState(() {
       _isloading = false;
     });

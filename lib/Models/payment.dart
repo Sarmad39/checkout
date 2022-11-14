@@ -62,7 +62,7 @@ class Payment with ChangeNotifier {
         'card[number]': card.cardNo,
         'card[cvc]': card.cvv
       });
-       print(response.body);
+      // print(response.body);
       final extractedData = json.decode(response.body) as Map<String,dynamic>;
 
       if (extractedData.containsKey('error')) {
@@ -83,7 +83,7 @@ class Payment with ChangeNotifier {
     } catch (error) {
       rethrow;
     }
-    print(tempCard);
+   // print(tempCard);
   }
 
   var tempCustomer =
