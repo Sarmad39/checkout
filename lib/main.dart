@@ -1,6 +1,7 @@
 import 'package:checkout/Models/payment.dart';
 import 'package:checkout/screens/checkout.dart';
 import 'package:checkout/screens/payment_info.dart';
+import 'package:checkout/screens/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: CheckoutScreen(),
+        home: ScreenW(),
         routes: {
           PaymentInfoScreen.routeName: (context) => PaymentInfoScreen(),
         },

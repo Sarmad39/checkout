@@ -63,10 +63,10 @@ class Payment with ChangeNotifier {
         'card[cvc]': card.cvv
       });
       // print(response.body);
-      final extractedData = json.decode(response.body) as Map<String,dynamic>;
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
 
       if (extractedData.containsKey('error')) {
-        print(extractedData['error']['message']); 
+        print(extractedData['error']['message']);
         throw HttpException(extractedData['error']['message']);
       } else {
         tempCard = {
@@ -79,11 +79,12 @@ class Payment with ChangeNotifier {
           'exmonth': card.exmonth,
           'exyear': card.exyear,
         };
+        notifyListeners();
       }
     } catch (error) {
       rethrow;
     }
-   // print(tempCard);
+    // print(tempCard);
   }
 
   var tempCustomer =
@@ -101,16 +102,23 @@ class Payment with ChangeNotifier {
         'address[city]': customer.city,
         'address[country]': customer.coutry
       });
-      // print(response.body);
-      var newCust = Customer(
-        id: json.decode(response.body)['id'],
-        name: customer.name,
-        city: customer.city,
-        coutry: customer.coutry,
-        phone: customer.phone,
-        paymentmthd: tempCard['id'],
-      );
-      tempCustomer = newCust;
+      print(response.body);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+
+      if (extractedData.containsKey('error')) {
+        print(extractedData['error']['message']);
+        throw HttpException(extractedData['error']['message']);
+      } else {
+        var newCust = Customer(
+          id: json.decode(response.body)['id'],
+          name: customer.name,
+          city: customer.city,
+          coutry: customer.coutry,
+          phone: customer.phone,
+          paymentmthd: tempCard['id'],
+        );
+        tempCustomer = newCust;
+      }
     } catch (error) {
       rethrow;
     }

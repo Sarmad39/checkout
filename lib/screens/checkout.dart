@@ -2,6 +2,7 @@ import 'package:checkout/screens/payment_info.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../Models/http_exception.dart';
 import '../Models/payment.dart';
 import '../constants.dart';
 
@@ -50,6 +51,26 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           await payment.addCustomer(temp);
           await payment.addSubscription(prodkey: productkey);
           await payment.uploaddata();
+          _nameController.clear();
+          _noController.clear();
+          _cityController.clear();
+          _countryController.clear();
+        } on HttpException catch (error) {
+          await showDialog<void>(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('An Error Occur'),
+              content: Text(error.message),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("okay"),
+                ),
+              ],
+            ),
+          );
         } catch (error) {
           await showDialog<void>(
             context: context,
@@ -152,9 +173,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   vertical: 12.5, horizontal: 10.0),
                               labelText: 'Phone Number',
                             ),
-                          ),
-                          SizedBox(
-                            height: Height * 1,
                           ),
                           TextFormField(
                             controller: _cityController,
